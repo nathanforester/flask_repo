@@ -14,11 +14,11 @@ class MoviesCheck: #customise
             if movies.name == field.data:
                 raise ValidationError(self.message)
 
-class MovieForm(FlaskForm): # customise
+class MoviesForm(FlaskForm): # customise
     name = StringField('Movie Name',
                 validators=[
                     DataRequired(),
-                    PlayersCheck(message= 'You have already added this movie')
+                    MoviesCheck(message= 'You have already added this movie')
                 ]
             )
     submit = SubmitField('Add Movie')
