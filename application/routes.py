@@ -1,5 +1,8 @@
 from flask import render_template, redirect, url_for, request
 
+from flask import Flask, jsonify, request
+import json, os, signal
+
 from application import app, db
 from application.models import Movies, Review
 from application.forms import MoviesForm, ReviewForm
@@ -50,3 +53,8 @@ def add_review(idnum):
 def reviews(idnum):
     reviews = Review.query.filter_by(movies_id=idnum).all()
     return render_template ('reviews.html', reviews=reviews)
+
+@app.route('/stopServer', methods=['GET'])
+def stopServer():
+    os.kill(os.getpid(), signal.SIGINT)
+    return jsonify({ "success": True, "message": "Server is shutting down..." })
