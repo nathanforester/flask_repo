@@ -1,9 +1,15 @@
 #!/bin/bash 
 
-cd /opt/movie_database
-sudo mkdir /flask_project
-sudo chown -R /flask_project
-sudo python3 -m venv venv
+sudo apt update
+sudo apt-get install python3-venv
+
+python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
-python3 app.py
+
+sudo mkdir /opt/movie_database
+sudo chown -R jenkins /opt/movie_database
+
+sudo systemctl daemon-reload
+sudo systemctl stop app.service
+sudo systemctl start app.service
